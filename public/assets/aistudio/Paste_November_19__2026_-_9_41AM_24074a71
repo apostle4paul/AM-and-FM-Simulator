@@ -1,0 +1,1081 @@
+# PROJECT: AM AND FM RADIO COMMUNICATION SIMULATOR AND COMPARATIVE ENGINEERING ANALYSIS
+
+## 1. PROJECT OVERVIEW
+
+Develop a complete, interactive, professional engineering web application titled:
+
+**AM vs FM Communication Simulator and Engineering Comparison**
+
+### Project scenario
+
+A regional broadcaster in Ethiopia must choose between Amplitude Modulation (AM) and Frequency Modulation (FM) for public information, educational broadcasting, and emergency radio services.
+
+The application must simulate, analyze, and compare both modulation techniques under the same practical communication assumptions.
+
+It must demonstrate their behavior under clean, moderate-noise, and weak-signal conditions, evaluate their technical performance, and support an engineering decision about where each technology is justified in Ethiopia.
+
+### Main objective
+
+Create a working digital communication laboratory that allows users to:
+
+1. Generate a common audio/message signal.
+2. Modulate the message using AM and FM.
+3. Transmit both signals through comparable noisy communication channels.
+4. Demodulate the received signals.
+5. Recover and compare the original messages.
+6. Calculate actual input and output SNR.
+7. Calculate signal distortion.
+8. Display time-domain waveforms and frequency spectra.
+9. Investigate the FM threshold region.
+10. Compare the engineering and economic performance of AM and FM.
+11. Evaluate Ethiopian broadcasting scenarios.
+12. Produce numerical experiment results and engineering recommendations.
+
+IMPORTANT:
+This must be a genuinely functional engineering simulator. Do not create a static demonstration, a presentation website, or an interface containing fabricated waveforms and manually entered simulation results.
+
+Every waveform, spectrum, numerical measurement, and performance graph must be generated from actual signal-processing calculations.
+
+---
+
+# 2. TECHNOLOGY AND APPLICATION ARCHITECTURE
+
+Build a browser-based web application.
+
+### Required technologies
+
+- React with JavaScript.
+- HTML5 Canvas or a reliable charting library for signal visualization.
+- Chart.js or Recharts for graphs.
+- JavaScript numerical signal-processing algorithms.
+- FFT implementation for frequency-domain analysis.
+- CSS modules or organized component-level styling.
+- Browser-based processing without requiring a backend for the core simulator.
+
+The application must be self-contained and usable after deployment.
+
+### Suggested project organization
+
+Separate the application into logical components:
+
+- Dashboard
+- SignalGenerator
+- AMModulator
+- AMDemodulator
+- FMModulator
+- FMDemodulator
+- NoiseChannel
+- SpectrumAnalyzer
+- PerformanceAnalyzer
+- ExperimentManager
+- EthiopianUseCases
+- CostComparison
+- DecisionMatrix
+- EngineeringTheory
+- ValidationReport
+
+Keep signal-processing functions separate from UI components.
+
+Use reusable functions and clear comments explaining important engineering calculations.
+
+Avoid putting the entire application into one large React component.
+
+---
+
+# 3. APPLICATION INTERFACE AND NAVIGATION
+
+Create a professional engineering laboratory dashboard.
+
+Application name: AM vs FM Communication Laboratory
+
+Use a modern technical interface with:
+
+- Dark navy or charcoal background.
+- Blue and cyan accents.
+- Readable typography.
+- Clear numerical measurement cards.
+- Professional engineering charts.
+- Well-organized control panels.
+- Consistent spacing.
+- Responsive desktop and mobile layouts.
+
+Do not overcrowd the dashboard.
+
+### Main navigation
+
+Create the following sections:
+
+1. Overview
+2. Signal Generator
+3. AM Laboratory
+4. FM Laboratory
+5. AM vs FM Comparison
+6. Experiment Results
+7. Ethiopian Broadcasting Analysis
+8. Cost and TCO Analysis
+9. Weighted Decision Matrix
+10. Engineering Theory and Validation
+
+The application should have a clear navigation sidebar or top navigation.
+
+All sections must be accessible and functional.
+
+---
+
+# 4. COMMON MESSAGE SIGNAL GENERATOR
+
+This is a critical requirement.
+
+AM and FM must use the same original message signal so their performance can be compared fairly.
+
+### Signal requirements
+
+The message frequency range must cover 3–5 kHz.
+
+Provide two signal-generation modes:
+
+**Mode A: Single-frequency sinusoidal message**
+
+Allow selection of:
+
+- 3 kHz
+- 4 kHz
+- 5 kHz
+
+**Mode B: Composite audio-like message**
+
+Generate a reproducible composite message containing multiple frequency components between 3 kHz and 5 kHz.
+
+The user should be able to adjust message amplitude and frequency.
+
+### Signal controls
+
+Include:
+
+- Message type.
+- Message frequency.
+- Message amplitude.
+- Sampling frequency.
+- Simulation duration.
+- Random seed.
+
+Use a sampling rate sufficiently high to represent the selected carrier and its modulation sidebands accurately. Use approximately 1 MHz as the initial sampling frequency, subject to validation of the selected carrier and maximum instantaneous frequency.
+
+Use the same message samples for AM and FM in every comparison.
+
+### Display
+
+Show:
+
+- Original message waveform.
+- Message frequency.
+- Message amplitude.
+- Sampling frequency.
+- Number of samples.
+- Message frequency spectrum.
+
+Label all graph axes with proper units.
+
+---
+
+# 5. AM MODULATION AND DEMODULATION LABORATORY
+
+Implement conventional double-sideband full-carrier Amplitude Modulation.
+
+### Mathematical model
+
+For a normalized sinusoidal message:
+
+s_AM(t) = Ac[1 + μ cos(2πfmt)]cos(2πfct)
+
+Where:
+
+- Ac = Carrier amplitude.
+- μ = AM modulation index.
+- fm = Message frequency.
+- fc = Carrier frequency.
+
+### AM controls
+
+Provide adjustable controls for:
+
+- Carrier amplitude.
+- Carrier frequency.
+- Modulation index from 0 to 1.5.
+- Receiver bandpass filter settings.
+- Envelope detector time constant.
+- Receiver low-pass filter cutoff.
+- Received channel SNR.
+
+### AM modulation
+
+Implement the actual AM equation using generated message samples.
+
+### AM transmission and reception
+
+The AM processing chain must be:
+
+Original message
+→ AM modulator
+→ Transmitted AM signal
+→ Noisy channel
+→ Received AM signal
+→ Receiver bandpass filtering
+→ Envelope detector
+→ DC removal and low-pass filtering
+→ Recovered message.
+
+Implement an actual envelope detector using a suitable digital envelope-detection method or a simulated RC detector with appropriate attack and release behavior.
+
+Do not simply display the original message as the recovered message.
+
+### AM overmodulation
+
+Allow modulation index values above 1.
+
+Demonstrate overmodulation when μ > 1.
+
+Display a warning indicating that conventional envelope detection becomes distorted under overmodulation.
+
+### AM numerical analysis
+
+Calculate and display:
+
+- Modulation index.
+- Carrier power.
+- Total transmitted power.
+- Sideband power.
+- Upper sideband frequency.
+- Lower sideband frequency.
+- Theoretical AM bandwidth.
+- Modulation efficiency.
+- Input SNR.
+- Output SNR.
+- Distortion.
+
+For a single-tone conventional AM signal:
+
+Total power:
+
+P_total = Pc(1 + μ²/2)
+
+Total sideband power:
+
+P_sidebands = Pc μ²/2
+
+AM bandwidth:
+
+BW_AM = 2fm
+
+For a normalized single-tone signal, calculate the modulation efficiency:
+
+η = μ²/(2 + μ²)
+
+Clearly distinguish single-tone theoretical equations from results obtained using composite messages.
+
+---
+
+# 6. FM MODULATION AND DEMODULATION LABORATORY
+
+Implement actual Frequency Modulation.
+
+### Mathematical model
+
+For a normalized sinusoidal message:
+
+s_FM(t) = Ac cos[2πfct + β sin(2πfmt)]
+
+FM modulation index:
+
+β = Δf/fm
+
+Where:
+
+- Δf = Peak frequency deviation.
+- fm = Message frequency.
+- β = FM modulation index.
+- fc = Carrier frequency.
+
+For arbitrary messages, generate FM by integrating the instantaneous frequency:
+
+f_i(t) = fc + Δf m(t)
+
+### FM controls
+
+Provide adjustable:
+
+- Carrier amplitude.
+- Carrier frequency.
+- Frequency deviation.
+- FM modulation index.
+- Receiver bandwidth.
+- Receiver low-pass filter.
+- Demodulator sensitivity.
+- Received channel SNR.
+
+Allow frequency deviation to be adjusted across a useful range, such as 5–25 kHz.
+
+Ensure the instantaneous frequency remains physically valid for the selected simulation parameters.
+
+### FM processing chain
+
+Original message
+→ FM modulator
+→ Transmitted FM signal
+→ Noisy channel
+→ Received FM signal
+→ Receiver bandpass filtering
+→ FM demodulator/discriminator
+→ DC removal and low-pass filtering
+→ Recovered message.
+
+Implement a real FM demodulator using a phase discriminator or an equivalent mathematically valid digital frequency discriminator.
+
+Account for phase wrapping and signal filtering.
+
+Do not simply reproduce the original message as the recovered FM signal.
+
+### FM spectrum and bandwidth
+
+Calculate Carson's rule:
+
+BW_FM = 2(Δf + fm)
+
+For composite messages, clearly identify the maximum message frequency used in the bandwidth estimate.
+
+Display:
+
+- FM modulation index.
+- Frequency deviation.
+- Instantaneous frequency.
+- Carrier frequency.
+- Theoretical bandwidth.
+- Measured frequency spectrum.
+- Input SNR.
+- Output SNR.
+- Distortion.
+
+---
+
+# 7. COMMON NOISY COMMUNICATION CHANNEL
+
+Both modulation systems must be evaluated under comparable received-signal conditions.
+
+Implement a common additive white Gaussian noise (AWGN) channel.
+
+### Noise controls
+
+Provide:
+
+- Received input SNR control in dB.
+- Noise power.
+- Random seed.
+- Enable/disable noise.
+- Channel condition presets.
+
+### Required presets
+
+**Experiment 1: Clean Channel**
+
+Use a high input SNR, such as 40 dB.
+
+Expected observation: Both AM and FM should recover the original signal with relatively low distortion.
+
+**Experiment 2: Moderate Noise**
+
+Use an intermediate input SNR, such as 20 dB.
+
+Expected observation: Compare the noise sensitivity and recovered signal quality of both systems.
+
+**Experiment 3: Weak Signal**
+
+Use a lower input SNR, such as 5 dB initially, and allow further adjustment.
+
+Expected observation: Show the degradation of both receivers and investigate the FM threshold effect.
+
+These values are initial experiment settings, not predetermined output results.
+
+### Fair comparison requirements
+
+- Use identical original message samples.
+- Use comparable simulation duration.
+- Use consistent sampling conditions.
+- Normalize transmitted average power to the same specified reference power for fair comparison.
+- Calibrate the AWGN using measured signal power.
+- Report actual received input SNR for each system.
+- Use identical nominal input SNR targets.
+- Use reproducible random seeds.
+- Keep receiver bandwidth and filtering assumptions visible.
+- Do not artificially favor either modulation technique.
+
+The AM and FM receivers may require different filter bandwidths because their modulation spectra differ. Make these settings explicit.
+
+---
+
+# 8. SIGNAL VISUALIZATION AND SPECTRUM ANALYSIS
+
+Provide clear and technically accurate time-domain and frequency-domain visualizations.
+
+### Required time-domain graphs
+
+Display:
+
+1. Original message signal.
+2. AM transmitted waveform.
+3. AM received waveform.
+4. AM recovered waveform.
+5. FM transmitted waveform.
+6. FM received waveform.
+7. FM recovered waveform.
+
+### Required frequency-domain graphs
+
+Display:
+
+1. Original message spectrum.
+2. AM transmitted spectrum.
+3. AM received spectrum.
+4. FM transmitted spectrum.
+5. FM received spectrum.
+
+### Visualization requirements
+
+- Use FFT-based spectrum calculations.
+- Show frequency in kHz.
+- Show amplitude or power with appropriate units.
+- Include axes, legends and grid lines.
+- Use correct frequency scaling.
+- Allow zooming or time-window selection.
+- Avoid displaying millions of samples directly.
+- Use decimation for plotting when necessary, without altering the underlying numerical calculations.
+- Use consistent visualization settings for AM/FM comparison.
+
+Display the original and recovered signals together for direct visual comparison.
+
+---
+
+# 9. PERFORMANCE ANALYSIS AND NUMERICAL MEASUREMENTS
+
+This section is mandatory.
+
+The simulator must calculate performance using actual generated signals.
+
+### Input SNR
+
+Calculate received input SNR using:
+
+SNR_in = 10 log10(P_signal/P_noise)
+
+Use the clean transmitted signal and actual added noise to determine the received channel SNR.
+
+### Output SNR
+
+Compare the recovered message with the original message.
+
+SNR_out = 10 log10(P_reference/P_error)
+
+Where:
+
+- Reference is the original message.
+- Error is the difference between the original and recovered signals.
+
+Before calculating output SNR:
+
+- Align signal delays.
+- Remove DC offset.
+- Correct receiver gain where appropriate.
+- Use consistent measurement windows.
+- Do not remove actual noise or nonlinear distortion through an artificial correction.
+
+### Distortion
+
+Calculate normalized mean squared error:
+
+NMSE = Σ(x[n] - y[n])² / Σx[n]²
+
+Also display normalized distortion percentage:
+
+Distortion (%) = 100 × NMSE
+
+Clearly identify this as normalized mean squared error-based distortion, not automatically as THD.
+
+### Performance measurements table
+
+Create an AM versus FM comparison table:
+
+| Measurement | AM | FM |
+| Input SNR | Measured | Measured |
+| Output SNR | Measured | Measured |
+| SNR improvement | Calculated | Calculated |
+| Distortion (%) | Calculated | Calculated |
+| Modulation index | Calculated | Calculated |
+| Bandwidth | Calculated | Calculated |
+| Receiver bandwidth | Displayed | Displayed |
+
+All values must update whenever the simulation parameters change.
+
+Do not hardcode example values into the results.
+
+---
+
+# 10. FM THRESHOLD EFFECT INVESTIGATION
+
+Implement a dedicated FM threshold analysis.
+
+This is an important requirement of the assignment.
+
+### Functionality
+
+Allow the user to perform an input SNR sweep.
+
+Gradually decrease received SNR across a selectable range.
+
+For every SNR point:
+
+1. Generate the received FM signal.
+2. Demodulate the signal.
+3. Recover the message.
+4. Calculate output SNR.
+5. Calculate distortion.
+6. Store the results.
+
+### Required graph
+
+Plot:
+
+- Horizontal axis: Received input SNR in dB.
+- Vertical axis: Recovered output SNR in dB.
+
+Display the performance curve.
+
+Identify the region where FM output quality deteriorates rapidly.
+
+Use the measured curve to estimate the threshold region.
+
+Do not hardcode a universal threshold value.
+
+Display a clear explanation:
+
+"The FM threshold effect is the rapid deterioration in demodulated signal quality when the received carrier-to-noise ratio falls below a practical threshold."
+
+Allow the user to adjust the FM modulation index and receiver bandwidth to investigate how receiver configuration affects the threshold behavior.
+
+Clearly state that the observed threshold depends on the selected signal, deviation, receiver and bandwidth.
+
+---
+
+# 11. EXPERIMENT MANAGEMENT AND RESULTS
+
+Create a dedicated experiment section.
+
+Provide three experiment presets:
+
+### Experiment A: Clean channel
+
+- High input SNR.
+- Low noise.
+- Compare recovered signals.
+- Record input/output SNR.
+- Record distortion.
+
+### Experiment B: Moderate noise
+
+- Intermediate input SNR.
+- Observe waveform degradation.
+- Compare AM and FM performance.
+- Record input/output SNR.
+- Record distortion.
+
+### Experiment C: Weak signal
+
+- Low input SNR.
+- Investigate signal recovery failure.
+- Observe the FM threshold region.
+- Compare AM and FM degradation.
+- Record input/output SNR.
+- Record distortion.
+
+### Results management
+
+Allow users to:
+
+- Run each experiment.
+- Re-run experiments.
+- Save results.
+- Compare the three experiment conditions.
+- Reset experiments.
+- Export results to CSV.
+
+Provide a consolidated table containing the actual measured results.
+
+Include the simulation settings used in each experiment so results can be reproduced.
+
+---
+
+# 12. ETHIOPIAN BROADCASTING APPLICATIONS
+
+Create a dedicated section called:
+
+"Ethiopian Broadcasting Scenarios"
+
+Evaluate at least two realistic scenarios.
+
+## Scenario 1: Wide-area and rural broadcasting
+
+Evaluate AM and FM for:
+
+- Rural communities.
+- Geographically dispersed settlements.
+- Public information broadcasting.
+- Educational broadcasting.
+- Emergency communication.
+- Areas with limited infrastructure.
+
+Discuss:
+
+1. Long-distance propagation.
+2. Mountainous terrain.
+3. Coverage requirements.
+4. Transmitter power.
+5. Antenna and tower infrastructure.
+6. Receiver availability and affordability.
+7. Spectrum availability.
+8. Maintenance and electricity constraints.
+
+Explain the advantages and limitations of AM and FM.
+
+Consider the long-distance propagation potential of medium-wave AM, including the effects of terrain, ground-wave propagation and nighttime sky-wave propagation.
+
+Explain why conventional VHF FM generally depends more strongly on line-of-sight coverage and suitable transmitter placement.
+
+Do not assume that AM always reaches every rural area or that FM cannot serve rural regions.
+
+## Scenario 2: Urban and community radio
+
+Evaluate AM and FM for:
+
+- Addis Ababa and other Ethiopian cities.
+- Local community radio.
+- Educational stations.
+- Local public information.
+- Urban emergency announcements.
+
+Discuss:
+
+1. Audio quality.
+2. Urban electrical noise.
+3. Buildings and multipath propagation.
+4. Interference.
+5. Coverage area.
+6. Frequency allocation.
+7. Receiver availability.
+8. Infrastructure and power.
+
+Explain why FM may be more suitable for local urban broadcasting where higher audio quality and adequate VHF spectrum are available.
+
+### Scenario comparison
+
+Create a table:
+
+| Factor | Rural/Wide Area | Urban/Community |
+| Terrain | Analysis | Analysis |
+| Coverage | Analysis | Analysis |
+| Noise | Analysis | Analysis |
+| Receiver availability | Analysis | Analysis |
+| Infrastructure | Analysis | Analysis |
+| AM suitability | Evaluation | Evaluation |
+| FM suitability | Evaluation | Evaluation |
+
+Include a clear engineering recommendation for each scenario.
+
+Use Ethiopia-specific evidence where available. Do not invent Ethiopian broadcasting statistics, frequency allocations or equipment prices.
+
+Provide source references for factual claims that depend on current regulations or market information.
+
+---
+
+# 13. CAPEX AND OPEX COST COMPARISON
+
+Create a dedicated cost-analysis section.
+
+Compare the cost of implementing AM and FM broadcasting systems.
+
+### CAPEX: Initial investment
+
+Include:
+
+1. Transmitter purchase.
+2. Antenna system.
+3. Tower and civil infrastructure.
+4. Receiver equipment.
+5. Installation and commissioning.
+6. Initial electrical infrastructure.
+
+### OPEX: Operating expenditure
+
+Include:
+
+1. Electricity consumption.
+2. Routine maintenance.
+3. Technical personnel.
+4. Equipment replacement.
+5. Site and tower maintenance.
+6. Other operating expenses where relevant.
+
+### Cost inputs
+
+Allow the user to enter estimated Ethiopian Birr (ETB) costs.
+
+Include editable assumptions for:
+
+- Transmitter cost.
+- Antenna and tower cost.
+- Installation cost.
+- Receiver cost and receiver quantity.
+- Power consumption in kW.
+- Operating hours per day.
+- Electricity price per kWh.
+- Annual maintenance cost.
+- Annual personnel and site operating costs.
+
+Clearly identify illustrative assumptions separately from verified vendor quotations.
+
+Do not invent current market prices and present them as real quotations.
+
+### Five-year total cost of ownership
+
+Calculate:
+
+TCO_5 = CAPEX + 5 × Annual OPEX
+
+Calculate electricity cost using:
+
+Annual energy = Power (kW) × Operating hours per day × 365
+
+Annual electricity cost = Annual energy × Electricity tariff
+
+Provide separate AM and FM calculations.
+
+Display:
+
+- Total initial CAPEX.
+- Annual electricity cost.
+- Annual maintenance cost.
+- Other annual OPEX.
+- Five-year OPEX.
+- Five-year TCO.
+- Cost difference.
+- Percentage cost difference.
+
+Allow the user to change assumptions and immediately update the results.
+
+Clearly identify whether the comparison is based on equal transmitter power, equal coverage objective or another defined engineering basis.
+
+---
+
+# 14. IMPLEMENTATION AND MAINTENANCE COMPLEXITY
+
+Rate both technologies on a scale from 1 to 5.
+
+Use:
+
+1 = Very low complexity.
+2 = Low complexity.
+3 = Moderate complexity.
+4 = High complexity.
+5 = Very high complexity.
+
+Provide separate ratings for:
+
+- Implementation complexity.
+- Installation complexity.
+- Receiver complexity.
+- Maintenance complexity.
+
+Explain the reasoning behind each rating.
+
+Do not assign scores without providing an engineering justification.
+
+---
+
+# 15. WEIGHTED ENGINEERING DECISION MATRIX
+
+Create an interactive weighted decision matrix to support the final AM/FM recommendation.
+
+### Evaluation criteria and initial weights
+
+| Criterion | Weight |
+| Coverage | 25% |
+| Audio quality | 20% |
+| Noise performance | 15% |
+| Infrastructure cost | 15% |
+| Receiver availability | 10% |
+| Power consumption | 10% |
+| Maintenance complexity | 5% |
+| Total | 100% |
+
+Allow the user to modify the weights.
+
+Ensure that the total weight equals 100%.
+
+### Scoring
+
+Rate AM and FM separately from 1 to 5.
+
+For positive criteria:
+
+5 = Excellent.
+1 = Poor.
+
+For cost, power consumption and complexity, higher scores must mean more favorable performance (lower cost, lower power requirement or lower complexity).
+
+Calculate:
+
+Weighted score = Σ(Weight × Rating)
+
+Normalize weights appropriately when displaying the final score.
+
+Display:
+
+- AM weighted score.
+- FM weighted score.
+- Difference between scores.
+- Criteria-level comparison.
+- Visual comparison chart.
+- Final recommendation.
+
+### Scenario-specific decision matrices
+
+Provide separate evaluation profiles for:
+
+1. Rural and wide-area broadcasting.
+2. Urban and community broadcasting.
+3. Emergency and public information broadcasting.
+
+Allow each scenario to use different weights and ratings.
+
+The final recommendation must be based on the actual selected scenario, not a universal claim that one technology is always better.
+
+---
+
+# 16. ENGINEERING THEORY AND EDUCATIONAL SECTION
+
+Create a section explaining the engineering principles behind the simulator.
+
+Include:
+
+- Definition of AM.
+- Definition of FM.
+- AM modulation equation.
+- FM modulation equation.
+- Modulation index.
+- Frequency deviation.
+- Envelope detection.
+- FM frequency discrimination.
+- Noise performance.
+- AM bandwidth.
+- Carson's rule.
+- FM threshold effect.
+- Advantages and disadvantages of AM and FM.
+
+Include equations using readable mathematical formatting.
+
+Explain how each equation relates to the controls and measurements in the simulator.
+
+The theory must be technically correct and consistent with the implemented algorithms.
+
+---
+
+# 17. INDEPENDENT MATHEMATICAL VALIDATION
+
+Implement a validation section where theoretical calculations can be compared with simulator outputs.
+
+At least two independent mathematical checks must be demonstrated.
+
+### Validation example 1: AM modulation index
+
+Given:
+
+Carrier amplitude = 10 V
+
+Message amplitude = 5 V
+
+Calculate:
+
+μ = Am/Ac = 5/10 = 0.5
+
+Expected modulation index = 50%.
+
+Compare this result with the simulator's calculated AM modulation index.
+
+### Validation example 2: FM modulation index and bandwidth
+
+Given:
+
+Message frequency = 4 kHz
+
+Frequency deviation = 20 kHz
+
+Calculate:
+
+β = Δf/fm = 20/4 = 5
+
+Carson's rule:
+
+BW = 2(Δf + fm)
+
+BW = 2(20 + 4) = 48 kHz
+
+Expected FM modulation index = 5.
+
+Expected theoretical bandwidth = 48 kHz.
+
+Compare the theoretical calculations with the simulator's numerical results.
+
+### Validation interface
+
+Display:
+
+- Given parameters.
+- Hand calculation.
+- Theoretical answer.
+- Simulator answer.
+- Percentage difference where applicable.
+- Validation status.
+
+Do not claim an exact match when a measured FFT bandwidth or numerical result is only an approximation to the theoretical result.
+
+Clearly distinguish analytical values from sampled numerical measurements.
+
+Add additional validation tests where practical.
+
+---
+
+# 18. EXPORT AND PRESENTATION FEATURES
+
+The application must support:
+
+- Exporting experiment results to CSV.
+- Saving experiment configurations.
+- Downloading numerical comparison results.
+- Displaying experiment settings.
+- Displaying theoretical validation.
+- Printing or exporting a concise experiment summary.
+
+Do not require a user account or database.
+
+The application must remain usable without signing into any external service.
+
+---
+
+# 19. SOFTWARE QUALITY AND ENGINEERING ACCURACY
+
+This is one of the most important sections.
+
+Before declaring the application complete, verify the following.
+
+### Signal processing
+
+- AM signal is generated from the actual AM equation.
+- AM envelope detector works.
+- AM overmodulation is demonstrated correctly.
+- FM signal is generated using instantaneous frequency integration.
+- FM demodulation uses a valid discriminator.
+- AWGN is actually added to the received signals.
+- Sampling frequency is sufficient.
+- Aliasing is avoided.
+- FFT plots represent the actual signals.
+
+### Performance analysis
+
+- Input SNR is calculated from actual signal and noise power.
+- Output SNR is calculated from aligned original and recovered signals.
+- Distortion is calculated from actual samples.
+- Receiver gain and DC offset are handled appropriately.
+- The same message is used for both modulation techniques.
+- Comparable signal-power and noise assumptions are maintained.
+
+### Interface
+
+- Every control works.
+- Every button works.
+- Graphs update when parameters change.
+- Experiment presets work.
+- Results are reproducible.
+- No broken navigation.
+- No placeholder charts.
+- No fabricated measurements.
+- No console errors.
+- No compilation errors.
+
+### Code quality
+
+- Organize code into reusable components.
+- Separate calculations from presentation.
+- Keep the implementation understandable.
+- Include comments for important equations.
+- Handle invalid parameters.
+- Prevent invalid numerical outputs.
+- Avoid unnecessary dependencies.
+
+If any feature is incomplete, implement it rather than displaying a placeholder.
+
+---
+
+# 20. FINAL APPLICATION ACCEPTANCE CRITERIA
+
+The application is considered complete only when all of the following work:
+
+1. Generate a common 3–5 kHz message.
+2. Run AM modulation and envelope detection.
+3. Run FM modulation and demodulation.
+4. Adjust AM modulation index.
+5. Adjust FM frequency deviation.
+6. Adjust noise level.
+7. Adjust receiver settings.
+8. Display all required transmitted and recovered waveforms.
+9. Display transmitted and received frequency spectra.
+10. Calculate actual input and output SNR.
+11. Calculate actual distortion.
+12. Run clean-channel experiments.
+13. Run moderate-noise experiments.
+14. Run weak-signal experiments.
+15. Identify the FM threshold region experimentally.
+16. Compare both systems numerically.
+17. Evaluate Ethiopian rural and urban broadcasting.
+18. Calculate CAPEX and OPEX.
+19. Calculate five-year TCO.
+20. Rate implementation and maintenance complexity.
+21. Generate weighted engineering decision matrices.
+22. Validate at least two outputs using hand calculations.
+23. Export experimental results.
+24. Work as a deployed web application.
+
+### Final deliverables
+
+Prepare the application so the student can submit:
+
+- Publicly accessible working application URL.
+- Source code or ZIP export.
+- GitHub repository link if available.
+- Clean-channel experiment screenshot.
+- Moderate-noise experiment screenshot.
+- Weak-signal experiment screenshot.
+- Numerical experiment results.
+- Independent mathematical validation.
+- Ethiopian engineering analysis.
+- CAPEX/OPEX and five-year TCO comparison.
+- Weighted decision matrix.
+- Brief AI assistance and validation statement.
+
+### FINAL INSTRUCTION
+
+Build the application in a complete, functional, and technically accurate manner.
+
+Prioritize engineering correctness over decorative design.
+
+Do not stop after generating the interface. Implement the actual signal-processing algorithms, connect every control to the calculations, test every required experiment, and verify the numerical results.
+
+If the project is too large to implement reliably in one generation, develop it in organized stages while preserving the architecture and all requirements above.
+
+At the end, provide a summary of implemented features, remaining limitations, and instructions for running and deploying the application.

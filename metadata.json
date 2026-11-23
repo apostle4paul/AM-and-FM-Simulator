@@ -1,0 +1,6 @@
+{
+  "name": "AM vs FM Communication Laboratory",
+  "description": "Interactive digital communication simulator and comparative engineering analysis comparing Amplitude Modulation (AM) and Frequency Modulation (FM) for Ethiopian broadcasting scenarios.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
